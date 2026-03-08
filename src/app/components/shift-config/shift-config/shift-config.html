@@ -1,0 +1,121 @@
+<div class="container">
+    <div class="grid-wrapper">
+        <mat-grid-list cols="4" rowHeight="400px" class="grid-list desktop-grid">
+            <mat-grid-tile colspan="2">
+                <mat-card class="card">
+                    <mat-card-title>User Shift Setup</mat-card-title>
+
+                    <div class="form-grid">
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Username</mat-label>
+                            <input matInput [(ngModel)]="username" />
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Select Weekday</mat-label>
+                            <mat-select [(ngModel)]="selectedWeekday">
+                                <mat-option *ngFor="let d of weekdays" [value]="d.value">
+                                    {{ d.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <!-- If selected weekday is NOT today -->
+                        <mat-form-field [hidden]="selectedWeekday === today" appearance="outline" class="full-width">
+                            <mat-label>Current Running Shift</mat-label>
+                            <mat-select [(ngModel)]="currentShiftIndex">
+                                <mat-option [value]="0">First</mat-option>
+                                <mat-option [value]="1">Night</mat-option>
+                                <mat-option [value]="2">Second</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <!-- If selected weekday IS today -->
+                        <mat-form-field [hidden]="selectedWeekday !== today" appearance="outline" class="full-width">
+                            <mat-label>Previous Shift</mat-label>
+                            <mat-select [(ngModel)]="previousShiftIndex">
+                                <mat-option [value]="0">First</mat-option>
+                                <mat-option [value]="1">Night</mat-option>
+                                <mat-option [value]="2">Second</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <button mat-raised-button color="primary" (click)="saveConfig()" class="save-btn">
+                        Save Configuration
+                    </button>
+                </mat-card>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="2">
+                <mat-card class="card">
+                    <mat-card-title>Check Shift</mat-card-title>
+                    <div class="calendar-wrapper">
+                        <mat-calendar *ngIf="anchorDate; else emptyCalendar" [startAt]="calendarMonth ?? null"
+                            [dateClass]="dateClass" (selectedChange)="onDateSelected($any($event))">
+                        </mat-calendar>
+                    </div>
+                    <ng-template #emptyCalendar>
+                        <div class="result">Save configuration to populate calendar</div>
+                    </ng-template>
+
+                    <div *ngIf="selectedDate && selectedShift" class="result">
+                        {{ selectedDate | date:'fullDate' }} → {{ selectedShift }}
+                    </div>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+    <div class="mobile-grid">
+        <mat-card class="card mobile-card">
+            <mat-card-title>User Shift Setup</mat-card-title>
+            <div class="form-grid">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Username</mat-label>
+                    <input matInput [(ngModel)]="username" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Select Weekday</mat-label>
+                    <mat-select [(ngModel)]="selectedWeekday">
+                        <mat-option *ngFor="let d of weekdays" [value]="d.value">
+                            {{ d.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field [hidden]="selectedWeekday === today" appearance="outline" class="full-width">
+                    <mat-label>Current Running Shift</mat-label>
+                    <mat-select [(ngModel)]="currentShiftIndex">
+                        <mat-option [value]="0">First</mat-option>
+                        <mat-option [value]="1">Night</mat-option>
+                        <mat-option [value]="2">Second</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field [hidden]="selectedWeekday !== today" appearance="outline" class="full-width">
+                    <mat-label>Previous Shift</mat-label>
+                    <mat-select [(ngModel)]="previousShiftIndex">
+                        <mat-option [value]="0">First</mat-option>
+                        <mat-option [value]="1">Night</mat-option>
+                        <mat-option [value]="2">Second</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" (click)="saveConfig()" class="save-btn">
+                Save Configuration
+            </button>
+        </mat-card>
+        <mat-card class="card mobile-card">
+            <mat-card-title>Check Shift</mat-card-title>
+            <div class="calendar-wrapper">
+                <mat-calendar *ngIf="anchorDate; else emptyCalendar" [startAt]="calendarMonth ?? null"
+                    [dateClass]="dateClass" (selectedChange)="onDateSelected($any($event))">
+                </mat-calendar>
+            </div>
+            <ng-template #emptyCalendar>
+                <div class="result">Save configuration to populate calendar</div>
+            </ng-template>
+            <div *ngIf="selectedDate && selectedShift" class="result">
+                {{ selectedDate | date:'fullDate' }} → {{ selectedShift }}
+            </div>
+        </mat-card>
+    </div>
+</div>

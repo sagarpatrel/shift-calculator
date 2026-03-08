@@ -1,0 +1,187 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: visible;
+}
+
+.grid-wrapper {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.grid-list {
+  width: 100%;
+  overflow: visible !important;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: visible;
+  position: relative;
+  z-index: 1;
+}
+
+::ng-deep .mat-mdc-select-panel {
+  z-index: 1000 !important;
+}
+
+::ng-deep mat-card-title {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+.full-width {
+  width: 100%;
+}
+
+::ng-deep mat-form-field {
+  width: 100%;
+}
+
+.save-btn,
+.check-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.result {
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  color: #333;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .grid-list {
+    max-width: 100%;
+  }
+}
+
+.desktop-grid {
+  display: block;
+}
+
+.mobile-grid {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .container {
+    min-height: auto;
+    padding: 10px;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+
+  .grid-wrapper {
+    display: none;
+  }
+
+  .desktop-grid {
+    display: none;
+  }
+
+  .mobile-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .mobile-card {
+    width: 100%;
+  }
+}
+
+.calendar-wrapper {
+  margin-top: 12px;
+}
+
+/* support both legacy and MDC class names */
+::ng-deep .mat-calendar,
+::ng-deep .mat-mdc-calendar {
+  width: 100%;
+}
+
+/* shift background + symbol inside calendar cell */
+::ng-deep .mat-calendar-body-cell.shift-first .mat-calendar-body-cell-content,
+::ng-deep .mat-mdc-calendar-body-cell.shift-first .mat-mdc-calendar-body-cell-content {
+  background: #c8e6c9;
+  position: relative;
+}
+::ng-deep .mat-calendar-body-cell.shift-first .mat-calendar-body-cell-content::after,
+::ng-deep .mat-mdc-calendar-body-cell.shift-first .mat-mdc-calendar-body-cell-content::after {
+  content: 'F';
+  position: absolute;
+  right: 6px;
+  bottom: 4px;
+  font-weight: 700;
+  color: #184d13;
+}
+
+::ng-deep .mat-calendar-body-cell.shift-night .mat-calendar-body-cell-content,
+::ng-deep .mat-mdc-calendar-body-cell.shift-night .mat-mdc-calendar-body-cell-content {
+  background: #bbdefb;
+  position: relative;
+}
+::ng-deep .mat-calendar-body-cell.shift-night .mat-calendar-body-cell-content::after,
+::ng-deep .mat-mdc-calendar-body-cell.shift-night .mat-mdc-calendar-body-cell-content::after {
+  content: 'N';
+  position: absolute;
+  right: 6px;
+  bottom: 4px;
+  font-weight: 700;
+  color: #0b3a66;
+}
+
+::ng-deep .mat-calendar-body-cell.shift-second .mat-calendar-body-cell-content,
+::ng-deep .mat-mdc-calendar-body-cell.shift-second .mat-mdc-calendar-body-cell-content {
+  background: #ffe0b2;
+  position: relative;
+}
+::ng-deep .mat-calendar-body-cell.shift-second .mat-calendar-body-cell-content::after,
+::ng-deep .mat-mdc-calendar-body-cell.shift-second .mat-mdc-calendar-body-cell-content::after {
+  content: 'S';
+  position: absolute;
+  right: 6px;
+  bottom: 4px;
+  font-weight: 700;
+  color: #7a3e00;
+}
+
+::ng-deep .mat-calendar-body-cell.shift-off .mat-calendar-body-cell-content,
+::ng-deep .mat-mdc-calendar-body-cell.shift-off .mat-mdc-calendar-body-cell-content {
+  background: #f0f0f0;
+}
+
+::ng-deep .mat-calendar-body-cell .mat-calendar-body-cell-content,
+::ng-deep .mat-mdc-calendar-body-cell .mat-mdc-calendar-body-cell-content {
+  min-height: 40px;
+}
