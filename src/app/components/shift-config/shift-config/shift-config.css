@@ -138,7 +138,7 @@
 }
 ::ng-deep .mat-calendar-body-cell.shift-first .mat-calendar-body-cell-content::after,
 ::ng-deep .mat-mdc-calendar-body-cell.shift-first .mat-mdc-calendar-body-cell-content::after {
-  content: 'F';
+  content: 'A';
   position: absolute;
   right: 6px;
   bottom: 4px;
@@ -153,7 +153,7 @@
 }
 ::ng-deep .mat-calendar-body-cell.shift-night .mat-calendar-body-cell-content::after,
 ::ng-deep .mat-mdc-calendar-body-cell.shift-night .mat-mdc-calendar-body-cell-content::after {
-  content: 'N';
+  content: 'C';
   position: absolute;
   right: 6px;
   bottom: 4px;
@@ -168,7 +168,7 @@
 }
 ::ng-deep .mat-calendar-body-cell.shift-second .mat-calendar-body-cell-content::after,
 ::ng-deep .mat-mdc-calendar-body-cell.shift-second .mat-mdc-calendar-body-cell-content::after {
-  content: 'S';
+  content: 'B';
   position: absolute;
   right: 6px;
   bottom: 4px;

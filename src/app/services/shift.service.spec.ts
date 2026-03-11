@@ -15,12 +15,12 @@ describe('ShiftService', () => {
 
   describe('getAnchorDate', () => {
     it('returns the most recent past occurrence of the weekday', () => {
-      // today is March 7 2026 Saturday (6)
-      const anchorFri = svc.getAnchorDate(5); // Friday, most recent past Friday = March 6
-      expect(anchorFri.getDate()).toBe(6);
+      // today is March 12 2026 Wednesday (3)
+      const anchorFri = svc.getAnchorDate(5); // Friday, most recent past Friday = March 7
+      expect(anchorFri.getDate()).toBe(7);
 
-      const anchorWed = svc.getAnchorDate(3); // Wednesday, most recent past Wednesday = March 4
-      expect(anchorWed.getDate()).toBe(4);
+      const anchorWed = svc.getAnchorDate(3); // Wednesday, most recent past Wednesday = March 12
+      expect(anchorWed.getDate()).toBe(12);
     });
   });
 
