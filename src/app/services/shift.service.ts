@@ -5,44 +5,32 @@ export class ShiftService {
   private shifts = ['First', 'Night', 'Second'];
 
   /**
-   * Get anchor date based on selected weekday.
+   * Returns the anchor date: the day AFTER the most recent occurrence of
+   * the selected weekday (because the new shift cycle starts the day after
+   * the change day).
    *
-   * The user picks the day of the week when the *shift cycle changes* (e.g. Saturday).
-   * The actual "anchor" used for computing shifts is the **day after the most recent
-   * occurrence of that weekday**, because the new shift runs starting the day after
-   * the change day.
-   *
-   * Example: if the change day is Saturday and today is Friday, the anchor becomes
-   * the Sunday after the previous Saturday; if today is Saturday, the anchor becomes
-   * the next day (Sunday).
+   * Examples (today = Wednesday):
+   *   selectedWeekday = Saturday → last Saturday was 4 days ago → anchor = Sunday (3 days ago)
+   *   selectedWeekday = Wednesday (today) → anchor = tomorrow (Thursday)
    */
   getAnchorDate(selectedWeekday: number): Date {
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const todayDay = today.getDay();
 
-    if (todayDay === selectedWeekday) {
-      // anchor = today - 6 days (to Sunday)
-      return new Date(today.getTime() - 6 * 24 * 60 * 60 * 1000);
-    } else {
-      // most recent past selectedWeekday
-      let diff = todayDay - selectedWeekday;
-      if (diff < 0) diff += 7;
-      return new Date(today.getTime() - diff * 24 * 60 * 60 * 1000);
-    }
+    // How many days back is the most recent selectedWeekday? (0 = today)
+    const daysBack = (todayDay - selectedWeekday + 7) % 7;
+
+    // Most recent selectedWeekday
+    const lastChangeDay = new Date(today.getTime() - daysBack * 24 * 60 * 60 * 1000);
+
+    // Anchor = the day AFTER the change day
+    return new Date(lastChangeDay.getTime() + 24 * 60 * 60 * 1000);
   }
 
   /**
-   * Calculate the shift index that will be active on the anchor date.
-   *
-   * The caller supplies either the current shift (when the selected weekday is not
-   * today) or the previous shift (when the selected weekday *is* today), and this
-   * method advances that index by a whole number of weeks to land on the anchor.
-   *
-   * @param selectedWeekday weekday used to compute the anchor (see `getAnchorDate`)
-   * @param todayWeekday current weekday (new Date().getDay())
-   * @param currentShiftIndex shift currently running today (required if weekdays differ)
-   * @param previousShiftIndex shift that just finished when the selected weekday is today
-   * @param anchorDate optional precomputed anchor; if not provided it will be derived
+   * Back-calculates the shift index that was active on the anchor date,
+   * given what is running today (or what just finished if today IS the change day).
    */
   resolveShiftIndex(
     selectedWeekday: number,
@@ -51,33 +39,48 @@ export class ShiftService {
     previousShiftIndex?: number,
     anchorDate?: Date,
   ): number {
+    const n = this.shifts.length;
+    const anchor = anchorDate ?? this.getAnchorDate(selectedWeekday);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     if (selectedWeekday === todayWeekday) {
-      // user was asked for the previous shift
-      return previousShiftIndex!;
+      // Today IS the change day. Anchor = tomorrow.
+      // Shift starting tomorrow = previousShiftIndex + 1
+      return (((previousShiftIndex! + 1) % n) + n) % n;
     } else {
-      return currentShiftIndex!;
+      // Back-calculate: how many whole weeks from anchor to today?
+      const diffDays = Math.round((today.getTime() - anchor.getTime()) / (1000 * 60 * 60 * 24));
+      const weeksPassed = Math.floor(diffDays / 7);
+      return (((currentShiftIndex! - weeksPassed) % n) + n) % n;
     }
   }
 
-  /** Get shift for any selected date */
+  /** Returns the shift name for any calendar date. */
   getShiftForDate(
     date: Date,
     anchorDate: Date,
     shiftIndexAtAnchor: number,
     selectedWeekday: number,
   ): string {
-    // Selected weekday OFF
+    // The change day is always OFF
     if (date.getDay() === selectedWeekday) {
       return 'OFF';
     }
 
-    const diffDays = Math.floor((date.getTime() - anchorDate.getTime()) / (1000 * 60 * 60 * 24));
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    const a = new Date(anchorDate);
+    a.setHours(0, 0, 0, 0);
 
+    const diffDays = Math.round((d.getTime() - a.getTime()) / (1000 * 60 * 60 * 24));
     const weeksPassed = Math.floor(diffDays / 7);
 
     const index =
       (((shiftIndexAtAnchor + weeksPassed) % this.shifts.length) + this.shifts.length) %
       this.shifts.length;
+
     return this.shifts[index];
   }
 }

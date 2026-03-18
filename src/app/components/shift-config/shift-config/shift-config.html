@@ -24,9 +24,9 @@
                         <mat-form-field [hidden]="selectedWeekday === today" appearance="outline" class="full-width">
                             <mat-label>Current Running Shift</mat-label>
                             <mat-select [(ngModel)]="currentShiftIndex">
-                                <mat-option [value]="0">First</mat-option>
-                                <mat-option [value]="1">Night</mat-option>
-                                <mat-option [value]="2">Second</mat-option>
+                                <mat-option [value]="0">A (First)</mat-option>
+                                <mat-option [value]="1">C (Night)</mat-option>
+                                <mat-option [value]="2">B (Second)</mat-option>
                             </mat-select>
                         </mat-form-field>
 
@@ -34,9 +34,9 @@
                         <mat-form-field [hidden]="selectedWeekday !== today" appearance="outline" class="full-width">
                             <mat-label>Previous Shift</mat-label>
                             <mat-select [(ngModel)]="previousShiftIndex">
-                                <mat-option [value]="0">First</mat-option>
-                                <mat-option [value]="1">Night</mat-option>
-                                <mat-option [value]="2">Second</mat-option>
+                                <mat-option [value]="0">A (First)</mat-option>
+                                <mat-option [value]="1">C (Night)</mat-option>
+                                <mat-option [value]="2">B (Second)</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -85,17 +85,17 @@
                 <mat-form-field [hidden]="selectedWeekday === today" appearance="outline" class="full-width">
                     <mat-label>Current Running Shift</mat-label>
                     <mat-select [(ngModel)]="currentShiftIndex">
-                        <mat-option [value]="0">First</mat-option>
-                        <mat-option [value]="1">Night</mat-option>
-                        <mat-option [value]="2">Second</mat-option>
+                        <mat-option [value]="0">A (First)</mat-option>
+                        <mat-option [value]="1">C (Night)</mat-option>
+                        <mat-option [value]="2">B (Second)</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field [hidden]="selectedWeekday !== today" appearance="outline" class="full-width">
                     <mat-label>Previous Shift</mat-label>
                     <mat-select [(ngModel)]="previousShiftIndex">
-                        <mat-option [value]="0">First</mat-option>
-                        <mat-option [value]="1">Night</mat-option>
-                        <mat-option [value]="2">Second</mat-option>
+                        <mat-option [value]="0">A (First)</mat-option>
+                        <mat-option [value]="1">C (Night)</mat-option>
+                        <mat-option [value]="2">B (Second)</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

@@ -74,14 +74,32 @@ export class ShiftConfigComponent implements OnInit {
         const parsed = JSON.parse(cfg);
         this.username = parsed.username || '';
         this.selectedWeekday = parsed.selectedWeekday ?? this.selectedWeekday;
-        this.anchorDate = parsed.anchorDate ? new Date(parsed.anchorDate) : null;
         this.shiftIndexAtAnchor = parsed.shiftIndexAtAnchor ?? 0;
         this.calendarMonth = new Date();
+        // Restore the saved anchor directly — updateCalendar() would
+        // recompute it from today which is correct for live use, but on
+        // reload we also need currentShiftIndex restored. Since we stored
+        // the already-resolved shiftIndexAtAnchor, just use it directly.
+        this.anchorDate = parsed.anchorDate ? new Date(parsed.anchorDate) : null;
       } catch (e) {
         console.error('Failed to parse stored shift config', e);
       }
     }
-    this.updateCalendar();
+    // If no sessionStorage, updateCalendar needs the user to have filled the form.
+    // If sessionStorage was loaded, still call updateCalendar so anchorDate is
+    // recalculated for today (in case days have passed since last save).
+    if (this.selectedWeekday !== undefined) {
+      this.updateCalendar();
+      // Toggle to force mat-calendar remount with correct dateClass
+      const savedAnchor = this.anchorDate;
+      this.anchorDate = null;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        this.anchorDate = savedAnchor;
+        this.calendarMonth = new Date();
+        this.cdr.detectChanges();
+      }, 0);
+    }
   }
 
   updateCalendar() {
@@ -130,8 +148,18 @@ export class ShiftConfigComponent implements OnInit {
 
     alert('Shift configuration saved ✅');
 
-    // Refresh the page to apply the new configuration
-    window.location.reload();
+    // Force mat-calendar to fully remount so dateClass re-runs on every cell.
+    // Simply calling detectChanges() is not enough — mat-calendar caches the
+    // dateClass output. Toggling anchorDate null→value destroys and recreates
+    // the calendar via *ngIf, which guarantees fresh class evaluation.
+    const savedAnchor = this.anchorDate;
+    this.anchorDate = null;
+    this.cdr.detectChanges();
+    setTimeout(() => {
+      this.anchorDate = savedAnchor;
+      this.calendarMonth = new Date();
+      this.cdr.detectChanges();
+    }, 0);
   }
 
   // determine the CSS class for any date dynamically
