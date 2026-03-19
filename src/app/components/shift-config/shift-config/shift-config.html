@@ -68,14 +68,14 @@
     </div>
     <div class="mobile-grid">
         <mat-card class="card mobile-card">
-            <mat-card-title>Shift Calculator</mat-card-title>
+            <mat-card-title class="card-title-spacing">Shift Calculator</mat-card-title>
             <div class="form-grid">
                 <mat-form-field appearance="outline" class="full-width">
                     <mat-label>Username</mat-label>
                     <input matInput [(ngModel)]="username" />
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Select Weekday</mat-label>
+                    <mat-label>Select your Weekend</mat-label>
                     <mat-select [(ngModel)]="selectedWeekday">
                         <mat-option *ngFor="let d of weekdays" [value]="d.value">
                             {{ d.label }}
