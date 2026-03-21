@@ -67,6 +67,9 @@
   font-size: 14px;
   font-weight: 500;
 }
+.save-btn {
+  background-color: #eaf2fc;
+}
 .card-title-spacing {
   margin-bottom: 16px; /* or whatever you want */
 }
