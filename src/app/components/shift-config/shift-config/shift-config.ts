@@ -167,24 +167,43 @@ export class ShiftConfigComponent implements OnInit {
     if (!this.anchorDate || this.selectedWeekday === undefined) {
       return '';
     }
+
+    const classes: string[] = [];
+
+    // ✅ Detect TODAY
+    const today = new Date();
+    if (
+      d.getDate() === today.getDate() &&
+      d.getMonth() === today.getMonth() &&
+      d.getFullYear() === today.getFullYear()
+    ) {
+      classes.push('today-date');
+    }
+
+    // ✅ Existing shift logic
     const shift = this.shiftService.getShiftForDate(
       d,
       this.anchorDate,
       this.shiftIndexAtAnchor,
       this.selectedWeekday,
     );
+
     switch (shift) {
       case 'First':
-        return 'shift-first';
+        classes.push('shift-first');
+        break;
       case 'Night':
-        return 'shift-night';
+        classes.push('shift-night');
+        break;
       case 'Second':
-        return 'shift-second';
+        classes.push('shift-second');
+        break;
       case 'OFF':
-        return 'shift-off';
-      default:
-        return '';
+        classes.push('shift-off');
+        break;
     }
+
+    return classes.join(' ');
   };
 
   onDateSelected(date: Date | null) {

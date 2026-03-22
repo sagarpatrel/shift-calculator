@@ -78,7 +78,23 @@
   font-weight: 500;
 }
 .save-btn {
-  background-color: #eaf2fc;
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #4b6cb7, #182848);
+  color: #fff !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+.save-btn:active {
+  transform: scale(0.98);
 }
 .card-title-spacing {
   margin-bottom: 16px; /* or whatever you want */
@@ -202,4 +218,13 @@
 ::ng-deep .mat-calendar-body-cell .mat-calendar-body-cell-content,
 ::ng-deep .mat-mdc-calendar-body-cell .mat-mdc-calendar-body-cell-content {
   min-height: 40px;
+}
+
+/* 🔴 Strong TODAY highlight (works with shift colors) */
+::ng-deep .today-date .mat-calendar-body-cell-content,
+::ng-deep .today-date .mat-mdc-calendar-body-cell-content {
+  border: 3px solid #ff5252 !important;
+  box-shadow: 0 0 8px rgba(255, 82, 82, 0.6);
+  font-weight: bold;
+  z-index: 2;
 }
