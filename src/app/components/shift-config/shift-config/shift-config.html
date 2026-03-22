@@ -67,7 +67,7 @@
         </mat-grid-list>
     </div>
     <div class="mobile-grid">
-        <mat-card class="card mobile-card">
+        <mat-card class="card mobile-card mobile-card-pad">
             <mat-card-title class="card-title-spacing">Shift Calculator</mat-card-title>
             <div class="form-grid">
                 <!-- <mat-form-field appearance="outline" class="full-width">
@@ -104,7 +104,7 @@
             </button>
         </mat-card>
         <mat-card class="card mobile-card">
-            <mat-card-title>Check Shift</mat-card-title>
+            <mat-card-title class="card-title-spacing-check-shift">Check Shift</mat-card-title>
             <div class="calendar-wrapper">
                 <mat-calendar *ngIf="anchorDate; else emptyCalendar" [startAt]="calendarMonth ?? null"
                     [dateClass]="dateClass" (selectedChange)="onDateSelected($any($event))">

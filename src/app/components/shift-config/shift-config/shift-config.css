@@ -99,7 +99,9 @@
 .card-title-spacing {
   margin-bottom: 16px; /* or whatever you want */
 }
-
+.card-title-spacing-check-shift {
+  padding-left: 9px;
+}
 .result {
   margin-top: 16px;
   padding: 12px;
@@ -160,6 +162,10 @@
   margin-top: 12px;
 }
 
+.mobile-card-pad {
+  padding-left: 16px;
+  padding-right: 16px;
+}
 /* support both legacy and MDC class names */
 ::ng-deep .mat-calendar,
 ::ng-deep .mat-mdc-calendar {
